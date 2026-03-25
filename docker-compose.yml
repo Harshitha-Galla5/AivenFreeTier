@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
 
@@ -6,11 +6,17 @@ services:
     build: ./producer
     container_name: producer
     restart: always
+    env_file:
+      - .env
+    depends_on:
+      - processor
 
   processor:
     build: ./log_processor
     container_name: processor
     restart: always
+    env_file:
+      - .env
 
   api:
     build: ./incident_service
@@ -18,3 +24,5 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    env_file:
+      - .env
